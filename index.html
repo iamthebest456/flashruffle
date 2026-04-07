@@ -1,21 +1,91 @@
 <!DOCTYPE html>
+
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>My Flash Game</title>
+  <title>Flash Game Menu</title>
 
-  <!-- Load Ruffle -->
-  <script src="ruffle.js"></script>
+  <!-- Ruffle CDN -->
+
+  <script src="https://unpkg.com/@ruffle-rs/ruffle"></script>
+
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      background: #111;
+      color: white;
+    }
+
+    h1 {
+      margin-top: 20px;
+    }
+
+    #menu {
+      margin: 20px;
+    }
+
+    button {
+      margin: 5px;
+      padding: 10px 15px;
+      font-size: 16px;
+      cursor: pointer;
+      border: none;
+      border-radius: 5px;
+      background: #444;
+      color: white;
+    }
+
+    button:hover {
+      background: #666;
+    }
+
+    #game-container {
+      margin: 20px auto;
+      width: 800px;
+      height: 600px;
+      background: black;
+    }
+  </style>
+
 </head>
 
 <body>
-  <h1>My Flash Game</h1>
 
-  <!-- Flash container -->
-  <ruffle-player 
-    src="curveball.swf" 
-    style="width: 800px; height: 600px;">
-  </ruffle-player>
+  <h1>Flash Game Menu</h1>
+
+  <div id="menu">
+    <button onclick="loadGame('curveball.swf')">Curveball</button>
+    <button onclick="loadGame('game2.swf')">Game 2</button>
+    <button onclick="loadGame('game3.swf')">Game 3</button>
+  </div>
+
+  <div id="game-container"></div>
+
+  <script>
+    let ruffle;
+    let player;
+
+    window.addEventListener("load", () => {
+      ruffle = window.RufflePlayer.newest();
+      player = ruffle.createPlayer();
+
+      const container = document.getElementById("game-container");
+      container.appendChild(player);
+
+      player.style.width = "800px";
+      player.style.height = "600px";
+
+      // Load default game
+      player.load("curveball.swf");
+    });
+
+    function loadGame(gameFile) {
+      if (player) {
+        player.load(gameFile);
+      }
+    }
+  </script>
 
 </body>
 </html>
